@@ -19,7 +19,7 @@
 
 ![overview](./docs/all_Figures/Fig1-framework.png)
 
-Architecture of our RaGS neural network. (a) The feature extraction module extract radar and image features. (b) The dual-branch fusion module fully leverages rich radar geometry for image branch and rich image semantics for radar branch, ultimately lifting the features into the unified BEV space. (c) The object-oriented attention module uses cross-attention to further enhance the featurization of the cross-modal BEV queries by deeply interacting with interested image tokens. (d) The object detection head. Dashed line represents the deep utilization of cross-modal information.
+RaGS consists of a Feature Extractor \& Head, Frustum-based Localization Initiation (FLI), Iterative Multimodal Aggregation (IMA), and Multi-level Gaussian Fusion (MGF). The positions of the Gaussians are initialized using the FLI module, along with learnable attributes such as rotation, scale, opacity, and implicit feature embeddings. These Gaussians are then passed into the IMA module, where they are projected onto the image plane to gather semantic information. Next, they are processed as voxels using sparse convolution with height-extended radar geometry. Residuals relative to regions of interest are computed iteratively, updating the positions towards sparse objects. Finally, the multi-level Gaussians are rendered into Bird’s Eye View (BEV) features and fused through MGF, followed by cross-modal fusion for 3D object detection.
 
 ## 🔥 Getting Started
 
