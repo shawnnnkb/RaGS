@@ -10,10 +10,10 @@
 4D millimeter-wave radar has emerged as a promising sensor for autonomous driving, but effective 3D object detection from both 4D radar and monocular images remains a challenge. Existing fusion approaches typically rely on either instance-based proposals or dense BEV grids, which either lack holistic scene understanding or are limited by rigid grid structures. To address these, we propose RaGS, the first framework to leverage 3D Gaussian Splatting (GS) as representation for fusing 4D radar and monocular cues in 3D object detection. 3D GS naturally suits 3D object detection by modeling the scene as a field of Gaussians, dynamically allocating resources on foreground objects and providing a flexible, resource-efficient solution. RaGS uses a cascaded pipeline to construct and refine the Gaussian field. It starts with the Frustum-based Localization Initiation (FLI), which unprojects foreground pixels to initialize coarse 3D Gaussians positions. Then, the Iterative Multimodal Aggregation (IMA) fuses semantics and geometry, refining the limited Gaussians to the regions of interest. Finally, the Multi-level Gaussian Fusion (MGF) renders the Gaussians into multi-level BEV features for 3D object detection. By dynamically focusing on sparse objects within scenes, RaGS enable object concentrating while offering comprehensive scene perception. Extensive experiments on View-of-Delft, TJ4DRadSet, and OmniHD-Scenes benchmarks demonstrate its state-of-the-art performance. Code will be released.
 
 <p align="center">
-  <img src="./docs/all_Figures/Fig2-refinement.png" width="300px" height="150px">
-  <img src="./docs/all_Figures/Fig4-gaussian.png" width="300px" height="150px">
+  <img src="./docs/all_Figures/Fig2-refinement.png" width="480px" height="240px" style="margin-right:50px;">
+  <img src="./docs/all_Figures/Fig4-gaussian.png" width="480px" height="240px" style="margin-right:50px;">
 </p>
-<p align="center"> 4D radar and camera fusion pipelines, Procedure of Iterative Multimodal Aggregation (IMA), and Dynamic Object Attention of RaGS.</p>
+<p align="center"> Procedure of Iterative Multimodal Aggregation (IMA), and Dynamic Object Attention of RaGS.</p>
 
 ## 🛠️ Method
 
