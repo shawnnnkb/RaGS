@@ -2,24 +2,25 @@
 
 ## 🗓️ News
 
-- **2024.11.23** code v1.0 released
-- **2024.11.21** RA-L acceptance
+- **2025.xx.xx** all code will be released after acceptance.
+- **2025.10.21** code v1.0 released
 
 ## 📜 Abstract
  
-4D millimeter-wave radar has gained attention as an emerging sensor for autonomous driving in recent years. However, existing 4D radar and camera fusion models often fail to fully exploit complementary information within each modality and lack deep cross-modal interactions. To address these issues, we propose a novel 4D radar and camera fusion method, named RaGS, for 3D object detection. Specifically, we first introduce a dual-branch fusion module that employs geometric depth completion and semantic radar PillarNet to comprehensively leverage geometric and semantic information within each modality. Then we introduce an object-oriented attention module that employs localization-aware cross-attention to facilitate deep interactions across modalites by allowing queries in bird’s-eye view (BEV) to attend to interested image tokens. We validate our RaGS on the TJ4DRadSet and View-of-Delft (VoD) datasets. Experimental results demonstrate that RaGS effectively fuses 4D radar data and camera image and achieves state-of-the-art performance.
+4D millimeter-wave radar has emerged as a promising sensor for autonomous driving, but effective 3D object detection from both 4D radar and monocular images remains a challenge. Existing fusion approaches typically rely on either instance-based proposals or dense BEV grids, which either lack holistic scene understanding or are limited by rigid grid structures. To address these, we propose RaGS, the first framework to leverage 3D Gaussian Splatting (GS) as representation for fusing 4D radar and monocular cues in 3D object detection. 3D GS naturally suits 3D object detection by modeling the scene as a field of Gaussians, dynamically allocating resources on foreground objects and providing a flexible, resource-efficient solution. RaGS uses a cascaded pipeline to construct and refine the Gaussian field. It starts with the Frustum-based Localization Initiation (FLI), which unprojects foreground pixels to initialize coarse 3D Gaussians positions. Then, the Iterative Multimodal Aggregation (IMA) fuses semantics and geometry, refining the limited Gaussians to the regions of interest. Finally, the Multi-level Gaussian Fusion (MGF) renders the Gaussians into multi-level BEV features for 3D object detection. By dynamically focusing on sparse objects within scenes, RaGS enable object concentrating while offering comprehensive scene perception. Extensive experiments on View-of-Delft, TJ4DRadSet, and OmniHD-Scenes benchmarks demonstrate its state-of-the-art performance. Code will be released.
+
+<p align="center">
+  <img src="./docs/all_Figures/Fig0-comparison.png" width="200px" height="150px">
+  <img src="./docs/all_Figures/Fig2-refinement.png" width="300px" height="150px">
+  <img src="./docs/all_Figures/Fig4-gaussian.png" width="300px" height="150px">
+</p>
+<p align="center"> 4D radar and camera fusion pipelines, Procedure of Iterative Multimodal Aggregation (IMA), and Dynamic Object Attention of RaGS.</p>
 
 ## 🛠️ Method
 
-![overview](./docs/all_Figures/Framework.png)
+![overview](./docs/all_Figures/Fig1-framework.png)
 
 Architecture of our RaGS neural network. (a) The feature extraction module extract radar and image features. (b) The dual-branch fusion module fully leverages rich radar geometry for image branch and rich image semantics for radar branch, ultimately lifting the features into the unified BEV space. (c) The object-oriented attention module uses cross-attention to further enhance the featurization of the cross-modal BEV queries by deeply interacting with interested image tokens. (d) The object detection head. Dashed line represents the deep utilization of cross-modal information.
-
-## 🍁 Quantitative Results
-
-![View-of-Delft](./docs/all_Figures/Tab-VoD.png)
-
-![TJ4DRadSet ](./docs/all_Figures/Tab-TJ4D.png)
 
 ## 🔥 Getting Started
 
@@ -29,24 +30,15 @@ step 2. Refer to [dataset.md](./docs/Guidance/dataset.md) to prepare View-of-del
 
 step 3. Refer to [train_and_eval.md](./docs/Guidance/train_and_eval.md) for training and evaluation.
 
-## 🚀 Model Zoo
-
-We retrained the model and achieved better performance compared to the results reported in the tables of the paper. We provide the checkpoints on View-of-delft (VoD) and TJ4DRadSet datasets, reproduced with the released codebase.
-
-|                           Dataset                            | Backbone | EAA 3D mAP | DC 3D mAP |                        Model Weights                         |
-| :----------------------------------------------------------: | :------: | :--------: | :-------: | :----------------------------------------------------------: |
-| [View-of-delft](projects/RaGS/configs/vod-RaGS_det3d_2x4_12e.py) | ResNet50 |   59.75    |   77.42   | [Link](https://github.com/shawnnnkb/RaGS-release/releases/download/v1.0/final_ckpt.zip) |
-| [TJ4DRadSet](projects/RaGS/configs/TJ4D-RaGS_det3d_2x4_12e.py) | ResNet50 |   41.82    |   47.16   | [Link](https://github.com/shawnnnkb/RaGS-release/releases/download/v1.0/final_ckpt.zip) |
-
 ### 😙 Acknowledgement
 
 Many thanks to these exceptional open source projects:
 - [BEVFormer](https://github.com/fundamentalvision/BEVFormer)
 - [DFA3D](https://github.com/IDEA-Research/3D-deformable-attention.git)
 - [mmdet3d](https://github.com/open-mmlab/mmdetection3d)
-- [VoxFormer](https://github.com/NVlabs/VoxFormer.git)
-- [OccFormer](https://github.com/zhangyp15/OccFormer.git)
-- [CGFormer](https://github.com/pkqbajng/CGFormer)
+- [GaussianFormer](https://github.com/huang-yh/GaussianFormer)
+- [SGDet3D](https://github.com/shawnnnkb/SGDet3D)
+- [OmniHD-Scenes](https://github.com/TJRadarLab/OmniHD-Scenes)
 
 As it is not possible to list all the projects of the reference papers. If you find we leave out your repo, please contact us and we'll update the lists.
 
@@ -56,6 +48,6 @@ If you find our work beneficial for your research, please consider citing our pa
 
 ## 🐸 Visualization Results
 
-![View-of-Delft](./docs/all_Figures/Visualization.png)
+![View-of-Delft](./docs/all_Figures/Fig3-visualization.png)
 
-Some visualization results on the VoD validation set (first row) and TJ4DRadSet test set (second row). Each figure corresponds to a frame of data containing an image and radar points (gray), with the red triangle marking the ego-vehicle position. Orange and yellow boxes represent ground-truths in the perspective and bird’s-eye views, respectively. Green and blue boxes indicate predicted bounding boxes from RaGS, and the bottom left shows BEV feature map visualizations. Figures (a), (b), and (c) demonstrate the detection performance of RaGS on cars, cyclists, and pedestrians of VoD, respectively. Figures (d), (e), and (f) illustrate the robustness of RaGS in the complex environments of the TJ4DRadSet, such as low-light nighttime conditions and out-of-focus scenarios. Better zoom in for details.
+Visualization results on the VoD validation set (first row) and TJ4DRadSet test set (second row) . Each figure corresponds to a frame. Orange and yellow boxes represent ground-truths in the perspective and bird’seye views, respectively. Green and blue boxes indicate predicted results. Zoom in for better view.

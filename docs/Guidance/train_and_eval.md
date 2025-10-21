@@ -1,6 +1,6 @@
 ## Training Details
 
-We train our RadarGS for totally 24 epochs on 4 NVIDIA 4090 GPUs, with a batch size of 4. Specifically, we divide the training of RadarGS into two stages: pretraining and training. (1) Pretraining Stage: In this stage, the radar and image branches are initialized with the pretrained RadarPillarNet and MVX-Faster-RCNN, respectively. The goal is to train the model's ability to estimate depth in the image branch and to fuse multimodal information in the BEV perspective effectively. (2) Training Stage: Using the pretrained checkpoint obtained from the pretraining stage, the model is further initialized and trained for 3D object detection tasks. The pretrained weights ([pretrained](https://github.com/shawnnnkb/RadarGS-release/releases/download/v1.0/pretrained_ckpt.zip)) and the final trained weights ([FINAL](https://github.com/shawnnnkb/RadarGS-release/releases/download/v1.0/final_ckpt.zip)) are available for download. Put all checkpoints under the projects/RadarGS/checkpoints.
+For all datasets, the final voxel is set to a cube of size 0.32 m, and the image sizes are 800×1280 for VoD, 640×800 for TJ4DRadSet, and 544×960 for OmniHD-Scenes. Anchor size and point cloud range are kept as in \cite{OmniHD}. The models are trained on 4 NVIDIA GeForce RTX 4090 GPUs with a batch size of 4 per GPU. AdamW is used as the optimizer, with 12 epochs for pretraining and 24 epochs for joint training. The weights are available for download. Put all checkpoints under the projects/RadarGS/checkpoints.
 
 ## Train
 
